@@ -73,9 +73,9 @@ export class AppComponent implements Oninit {
       id: ''
     };
   }
-  ngOninit() {
-  this.groceryList = this.getGroceryAllLists();
-  
+  Oninit() {
+  this.getGroceryAllLists();
+
   }
 
   tabChanged(event) {
@@ -91,7 +91,7 @@ export class AppComponent implements Oninit {
     this.newGroceryItem.groceryName = newGroceryItem.value;
     const id = Math.random().toString;
     console.log(this.newGroceryItem);
-    this.createNewItem(this.newGroceryItem, id);
+    this.createNewItem(this.newGroceryItem);
   }
   public save() {
     this.newGroceryItem.groceryName = this.name;
@@ -110,15 +110,16 @@ export class AppComponent implements Oninit {
   }
   public getGroceryAllLists() {
     const args = new RequestOptions({ method: 'Get' });
-    return this.http.get(this.url + '/', args)
+    return this.http.get('http://localhost:65264/groceries/' , args)
       .map((res) => res.json() as any)
       .catch(this.handleErrorObservable)
       .subscribe((data) => {
+        this.groceryList  = data;
         console.log(data);
       });
   }
-  public createNewItem(item: any, id: any) {
-    return this.http.post(this.url + id, item)
+  public createNewItem(item: any) {
+    return this.http.post('http://localhost:65264/newList', item)
         .map(this.extractData)
         .catch(this.handleErrorObservable)
         .subscribe((data) => {
@@ -126,7 +127,7 @@ export class AppComponent implements Oninit {
         });
 }
 public editItem(item: any, id: any) {
-  return this.http.put(this.url + id, item)
+  return this.http.put('http://localhost:65264/groceries/' + id + '/update', item)
       .map(this.extractData)
       .catch(this.handleErrorObservable)
       .subscribe((data) => {
@@ -134,7 +135,7 @@ public editItem(item: any, id: any) {
       });
 }
 public deleteSelectedItem(id: string): Observable<any> {
-  return this.http.delete(this.url, id)
+  return this.http.delete('http://localhost:65264/groceries/' + id + '/delete')
       .map(this.extractData)
       .catch(this.handleErrorObservable);
 }

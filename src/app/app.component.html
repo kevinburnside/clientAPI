@@ -8,11 +8,11 @@
 <p>Please Select Your Grocery List</p>
 
   <mat-tab-group (selectedTabChange)="tabChanged($event)">
-      <mat-tab *ngFor="let list of groceryLists" label={{list.GroceryListId}}>
-        <mat-card class="example-card" *ngFor="let item of groceries;">
+      <mat-tab *ngFor="let list of groceryList" label={{list.GroceryListId}}>
+        <mat-card class="example-card" *ngFor="let item of groceryList;">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{item}}</mat-card-title>
+            <mat-card-title>{{item.groceryName}}</mat-card-title>
             <mat-card-subtitle (click)="deleteSelected(item)" class="menu_links" onmouseover="" style="cursor: pointer;">Click to delete</mat-card-subtitle>
           </mat-card-header>
           </mat-card></mat-tab>
