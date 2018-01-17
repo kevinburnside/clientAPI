@@ -1,4 +1,4 @@
-import { Component, Oninit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -50,8 +50,9 @@ interface NewGroceryItem {
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements Oninit {
+export class AppComponent implements OnInit {
   title = 'app';
+  ngOnInit;
   public groceryLists = [
     { GroceryListId: 'My Vegetarian', item: ['apples', 'carrots'] },
     { GroceryListId: 'Cottage List' },
@@ -73,7 +74,7 @@ export class AppComponent implements Oninit {
       id: ''
     };
   }
-  Oninit() {
+  OnInit() {
   this.getGroceryAllLists();
 
   }
@@ -87,18 +88,18 @@ export class AppComponent implements Oninit {
     console.log(item);
     this.deleteSelectedItem(item);
   }
-  public addNewItem(newGroceryItem) {
-    this.newGroceryItem.groceryName = newGroceryItem.value;
-    const id = Math.random().toString;
-    console.log(this.newGroceryItem);
+  public save(newGroceryItem) {
+    //this.newGroceryItem.groceryName = newGroceryItem.groceryName;
+    //const id = Math.random().toString;
+   // console.log(this.newGroceryItem);
     this.createNewItem(this.newGroceryItem);
   }
-  public save() {
+ /* public save() {
     this.newGroceryItem.groceryName = this.name;
     this.newGroceryItem.quantity = this.quantity;
     console.log(this.newGroceryItem);
     this.editItem(this.newGroceryItem, this.newGroceryItem.id);
-  }
+  }*/
   public getGroceryList(userid: string) {
     const args = new RequestOptions({ method: 'Get' });
     return this.http.get(this.url + userid + '/', args)
@@ -110,7 +111,7 @@ export class AppComponent implements Oninit {
   }
   public getGroceryAllLists() {
     const args = new RequestOptions({ method: 'Get' });
-    return this.http.get('http://localhost:65264/groceries/' , args)
+    return this.http.get('http://localhost:65264/groceries' , args)
       .map((res) => res.json() as any)
       .catch(this.handleErrorObservable)
       .subscribe((data) => {
